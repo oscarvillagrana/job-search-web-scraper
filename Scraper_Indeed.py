@@ -1,14 +1,15 @@
 #!/bin/python
 # Scraper_Indeed
 
-#########################################################
+########################################################
 #
-# Working Code!
+# Extract company name and job title from html file
 #
-#########################################################        
+########################################################        
 
 
 from bs4 import BeautifulSoup
+
 # this loop ammends each title & company per result
 soup = BeautifulSoup(open(input("Enter a file to read: ")), "html.parser")
 
@@ -20,7 +21,26 @@ for span in title:
         print(x.text,span.text)
 
 
+########################################################
 #
+# parse data using regex and convert to DataFrame
+#
+########################################################
+
+
+import re
+import pandas as pd
+
+with open(input("Enter a file to read: "), 'r') as f:
+    data = f.read()
+
+m = re.findall('(\w+)\n\n\n(\w+)', data)
+d = {'Company': [c[0] for c in m], 'Position': [c[1] for c in m]}
+df = pd.DataFrame(data=d)
+
+
+#
+# use zip to ammend different html tags
 # stacko example 47863031
 #
 
@@ -122,11 +142,12 @@ for span in soup.find_all('div', class_='title', class_='company'):
 
 print each.text.strip().encode('utf-8')
 
-#########################################################
+
+########################################################
 #
-# Creating a Class!
+# Class
 #
-#########################################################        
+########################################################        
 
 
 from bs4 import BeautifulSoup
@@ -160,11 +181,12 @@ class Job_Search(object):
         return " Job_Search class representing a job search html page"
 
 
-#########################################################
+########################################################
 #
-# Working Code!
+# Extracts individualy the company names and job titles
+# from a html file
 #
-#########################################################        
+########################################################        
 
 
 soup = BeautifulSoup(open(input("Enter a file to read: ")), "html.parser")
