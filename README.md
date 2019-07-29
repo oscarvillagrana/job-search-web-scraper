@@ -10,7 +10,7 @@ Gathers information about employment opportunities using multiple sources. [Inde
 gathering and parsing of website continent is extremely well structured. 
 However, setting it up correctly everytime when looking for employment is a 
 painful process that involves many steps. To make life easier, I've packaged
-these processes up in this **Job-Search-Env** project.
+these processes up in this **job-search-web-scraper** project.
 
 # Status
 
