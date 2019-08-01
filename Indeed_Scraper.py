@@ -17,7 +17,7 @@ import requests
 
 
 page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
-headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+headers = {'User-Agent':'Mozilla/5.0'}
 session = requests.Session()
 pageTree = session.get(page, headers=headers)
 pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
@@ -36,8 +36,6 @@ def get_company_and_jobs():
     for span in jobTitle:
         for x in companyName:
             print(x.text,span.text)
-
-
 
 def get_company_names(self):
     """this function scrapes the company names"""
@@ -59,6 +57,7 @@ def get_job_titles(self):
 
 def Parse_Data():
     """Turns the returned list into a Pandas DataFrame"""
+    # still using html files atm
     with open(input("Enter a file to read: "), 'r') as f:
         data = f.read()
     m = re.findall('(\w+)\n\n\n(\w+)', data)
@@ -67,7 +66,7 @@ def Parse_Data():
 
 
 #-----------------------------------------------------
-# Here I am trying to figure out how to make a dict
+# Here I am trying to figure out how to make a dataframe
 # out of the get_company_and_jobs
 #-----------------------------------------------------
 

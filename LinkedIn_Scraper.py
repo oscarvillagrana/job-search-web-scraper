@@ -1,5 +1,8 @@
 # Scraper_Linked_in.py
 
+# I havent spent heaps of time working on this one yet
+
+
 """
 <a data-control-id="/k9FAJq2SYSDWoW3J2RuKw==" data-control-name="A_jobssearch_job_result_click" href="/jobs/view/1002971771/?eBP=CwEAAAFr7HFQQ5GOeji5_qSMji15711rYmqonYcD0CrDqLgQrTIlJRU-VXNZqPIdg21B466ctny2rzQ5fs-SPPMyxKXiDOeWK5EacB9Z4G18KbQMF4Hww1Oi5E3Pd9W08cFrnLQfJUAv4ucWz2CeNaCKW0T1m2k_CjQvBtKmAdsCzQRGLBk_A-1Pci9UuUfcuRK34HIQYOimpVy6zifk8USeS6bE6vugcC2mm96_b-LnZhOgbF4cWTXugDgvnGYdYy2YgPXHp8chA7INL78E-YrJRHZefQqWqHEyB62xcGnsi42nMYRmuDZ30QIFQXhTrQ6Fz9THJnqE0MLPX_rVhZlqt67Fd5BLJF5C1hqRSqDKd011IxcAk_dxwv22yI-JgQZobgqpJbb2baNbGq8433n0HA&amp;recommendedFlavor=SCHOOL_RECRUIT&amp;refId=bcce5709-ad9d-4331-87b8-6b104ce5397e&amp;trk=d_flagship3_search_srp_jobs" id="ember147" class="job-card-search__link-wrapper js-focusable disabled ember-view">          Salesforce QA Engineer
             <span class="job-card-search__promoted-tag label-16dp ml1">
@@ -19,7 +22,7 @@ class_="job-card-search__company-name-link ember-view"
 
 from bs4 import BeautifulSoup
 
-
+# Still using html files downloaded. poor internet connection in mx
 soup = BeautifulSoup(open(input("Enter a file to read: ")), "html.parser")
 # ammends
 title = soup.find_all('a', class_="job-card-search__link-wrapper js-focusable disabled ember-view")
