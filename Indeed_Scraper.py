@@ -5,10 +5,12 @@ import re
 import pandas as pd
 import requests
 
+
 #-----------------------------------------------------
 # If using local html files ask the user to 
 # enter a filename 
 #-----------------------------------------------------
+
 
 def get_local_soup():
     try:
@@ -26,9 +28,11 @@ def get_soup():
 
 pageSoup = get_soup()
 
+
 #-----------------------------------------------------
 # Prints company and job information
 #-----------------------------------------------------
+
 
 def print_company_and_jobs():
     """this function scrapes the company names 
@@ -50,6 +54,12 @@ def print_job_titles():
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
         print(span.text)
+
+
+#-----------------------------------------------------
+# Makes a list with company and job information
+#-----------------------------------------------------
+
 
 def get_company_and_jobs():
     """this function scrapes the company names 
@@ -80,15 +90,30 @@ def get_job_titles():
         jobs.append(str(span.text))
     return jobs
 
+
 #-----------------------------------------------------
 # TODO: Get links from Soup and add them to df
 #-----------------------------------------------------
+
+
+#not working
+def print_links(): 
+     """this function scrapes the job titles""" 
+    jobLink = pageSoup.find_all('div', class_='title')
+    for div in jobLink: 
+        print(div.find('a')['href']) 
+
+#not working
+def print_links(): 
+     """this function scrapes the job titles""" 
+    jobLink = [div.a for div in pageSoup.find_all('div', class_='title')]
+    for div in jobLink: 
+        print(div['href']) 
 
 # Here I am trying to translate this get_column_titles function 
 # example into one that keeps the links of jobs and company
 
 # example: data visualisation with python and javascript p.152
-
 def get_column_titles(table):
     """ Get the Nobel categories from the table header """
     cols = []
@@ -96,26 +121,26 @@ def get_column_titles(table):
         link = th.find('a')
         # Store the category name and any Wikipedia link it has
         if link:
-            cols.append({'name':link.text,\
+            cols.append({'title':link.text,\
                          'href':link.attrs['href']})
         else:
-            cols.append({'name':th.text, 'href':None})
+            cols.append({'title':th.text, 'href':None})
     return cols
 
 # my version so far:
-
 def get_job_titles():
     """this function scrapes the job titles"""
     jobs = []
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
-        link = span.find('a')
+        link = span.find('href')
         if link:
-            comps.append({'name':link.text,
+            jobs.append({'title':link.text,
                           'href':link.attrs['href']})
         else:
-            comps.append({'name':th.text, 'href':none})
-    return span.text
+            jobs.append({'title':span.text, 'href':None})
+    return jobs
+
 
 #-----------------------------------------------------
 # Parse Data with Pandas DataFrame
@@ -159,3 +184,4 @@ def make_table():
     job_title.append(jobTitle.text)
     df = pd.DataFrame({"company_name":company_name,"job_title":job_title})
     return df
+
