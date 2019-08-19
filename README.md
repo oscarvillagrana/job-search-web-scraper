@@ -1,4 +1,12 @@
-# A productive job search environment
+# Job Search Questions
+
+What is the tech company's main intention?
+How many job oppenings do tech companies currently have?
+Do tech companies have job listings for the same job posted in different sites?
+What job positions does a tech company require the most?
+What skill set, i.e. code languages, does a certain job position generaly require?
+
+# A Job Rearch Environment
 
 Gathers information about employment opportunities using multiple sources. [Indeed](https://www.indeed.com/) and [LinkedIn](http://www.linkedin.com/) are only a couple of the many awesome search engines available. This project offers three major additions:
 
