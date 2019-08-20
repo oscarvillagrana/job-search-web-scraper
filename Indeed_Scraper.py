@@ -6,12 +6,7 @@ import pandas as pd
 import requests
 
 
-#-----------------------------------------------------
-# If using local html files ask the user to 
-# enter a filename 
-#-----------------------------------------------------
-
-
+# ask the user to enter a local html filename
 def get_local_soup():
     try:
         return BeautifulSoup(open(input("Enter a file to read: ")), "html.parser")
@@ -28,15 +23,8 @@ def get_soup():
 
 pageSoup = get_soup()
 
-
-#-----------------------------------------------------
 # Prints company and job information
-#-----------------------------------------------------
-
-
 def print_company_and_jobs():
-    """this function scrapes the company names 
-    and job titles"""
     companyName = pageSoup.find_all('span', class_='company')
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
@@ -44,38 +32,28 @@ def print_company_and_jobs():
             print(x.text,span.text)
 
 def print_company_names():
-    """prints a list of the company names"""
     companyName = pageSoup.find_all('span', class_='company')
     for span in companyName:
         print(span.text)
 
 def print_job_titles():
-    """this function scrapes the job titles"""
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
         print(span.text)
 
 
-#-----------------------------------------------------
 # Makes a list with company and job information
-#-----------------------------------------------------
-
-
 def get_company_and_jobs():
-    """this function scrapes the company names 
-    and job titles"""
     comps_and_jobs = []
     companyName = pageSoup.find_all('span', class_='company')
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
-
         for x in companyName:
             comps_and_jobs.append(str(x.text))
             comps_and_jobs.append(str(span.text))
     return comps_and_jobs
 
 def get_company_names():
-    """this function scrapes the company names"""
     comp_names = []
     companyName = pageSoup.find_all('span', class_='company')
     for span in companyName:
@@ -83,7 +61,6 @@ def get_company_names():
     return comp_names
 
 def get_job_titles():
-    """this function scrapes the job titles"""
     jobs = []
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
@@ -92,27 +69,32 @@ def get_job_titles():
 
 
 #-----------------------------------------------------
+# TODO: Turn results into a table with pandas or a dict
+#-----------------------------------------------------
+
+
+# Parse Data with html files
+def Parse_Local_Data():
+    with open(input("Enter a file to read: "), 'r') as f:
+        data = f.read()
+    m = re.findall('(\w+)\n(\w+)', data)
+    d = {'Company': [c[0] for c in m], 'Position': [c[1] for c in m]}
+    df = pd.DataFrame(data=d)
+
+def Parse_Data():
+    data = get_company_names()    
+    m = re.findall('(\w+)\n(\w+)', data)
+    d = {'Company': [c[0] for c in m], 'Position': [c[1] for c in m]}
+    df = pd.DataFrame(data=d)
+
+
+#-----------------------------------------------------
 # TODO: Get links from Soup and add them to df
 #-----------------------------------------------------
 
 
-#not working
-def print_links(): 
-     """this function scrapes the job titles""" 
-    jobLink = pageSoup.find_all('div', class_='title')
-    for div in jobLink: 
-        print(div.find('a')['href']) 
-
-#not working
-def print_links(): 
-     """this function scrapes the job titles""" 
-    jobLink = [div.a for div in pageSoup.find_all('div', class_='title')]
-    for div in jobLink: 
-        print(div['href']) 
-
 # Here I am trying to translate this get_column_titles function 
 # example into one that keeps the links of jobs and company
-
 # example: data visualisation with python and javascript p.152
 def get_column_titles(table):
     """ Get the Nobel categories from the table header """
@@ -129,7 +111,6 @@ def get_column_titles(table):
 
 # my version so far:
 def get_job_titles():
-    """this function scrapes the job titles"""
     jobs = []
     jobTitle = pageSoup.find_all('div', class_='title')
     for span in jobTitle:
@@ -142,41 +123,26 @@ def get_job_titles():
     return jobs
 
 
-#-----------------------------------------------------
-# Parse Data with Pandas DataFrame
-#
-# TODO: Turn results into a table with pandas or a dict
-#-----------------------------------------------------
+#not working
+def print_links(): 
+    jobLink = pageSoup.find_all('div', class_='title')
+    for div in jobLink: 
+        print(div.find('a')['href']) 
 
-def Parse_Data():
-    """Turns html files list into a Pandas DataFrame"""
-    with open(input("Enter a file to read: "), 'r') as f:
-        data = f.read()
-    
-    m = re.findall('(\w+)\n(\w+)', data)
-    d = {'Company': [c[0] for c in m], 'Position': [c[1] for c in m]}
-    df = pd.DataFrame(data=d)
+#not working
+def print_links(): 
+    jobLink = [div.a for div in pageSoup.find_all('div', class_='title')]
+    for div in jobLink: 
+        print(div['href']) 
 
-def Parse_Data1():
-    """Turns the returned list into a Pandas DataFrame"""
-    data = get_company_names()
-    
-    m = re.findall('(\w+)\n(\w+)', data)
-    d = {'Company': [c[0] for c in m], 'Position': [c[1] for c in m]}
-    df = pd.DataFrame(data=d)
 
 #-----------------------------------------------------
-# TODO: Remove Duplicates
+# TODO: Make table
 #-----------------------------------------------------
 
-#-----------------------------------------------------
-# Here I am trying to figure out how to make a dataframe
-# out of the get_company_and_jobs
-#-----------------------------------------------------
 
 # AttributeError when trying to append the output 
 # from get_company_and_jobs
-
 def make_table():
     company_name = []
     job_title = []
@@ -185,3 +151,15 @@ def make_table():
     df = pd.DataFrame({"company_name":company_name,"job_title":job_title})
     return df
 
+
+#-----------------------------------------------------
+# TODO: Remove Duplicates
+#-----------------------------------------------------
+
+
+# chapter in: python for data analysis.pg.194.e379
+def remove_duplicates():
+    data = get_company_and_jobs()
+    data.drop_duplicates()
+    # returns boolean indicating duplicate row
+    #data.duplicated()
