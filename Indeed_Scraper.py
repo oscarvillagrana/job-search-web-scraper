@@ -1,4 +1,4 @@
-#!/usr/bin/python
+2#!/usr/bin/python
 
 from bs4 import BeautifulSoup
 import re
@@ -12,6 +12,12 @@ def get_local_soup():
         return BeautifulSoup(open(input("Enter a file to read: ")), "html.parser")
     except FileNotFoundError:
         print("File Not Found. Exiting!")
+
+def get_input_soup():
+    try:
+        return BeautifulSoup(open(input("Enter a website to read: ")), "html.parser")
+    except FileNotFoundError:
+        print("Site Not Found. Exiting!")
 
 page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
 headers = {'User-Agent':'Mozilla/5.0'}
@@ -154,12 +160,15 @@ def make_table():
 
 #-----------------------------------------------------
 # TODO: Remove Duplicates
+# Python for data analysis.pg.194.e379
 #-----------------------------------------------------
 
 
-# chapter in: python for data analysis.pg.194.e379
 def remove_duplicates():
     data = get_company_and_jobs()
-    data.drop_duplicates()
     # returns boolean indicating duplicate row
-    #data.duplicated()
+    data.duplicated()
+    # returns a df where the duplicated array is True
+    data.drop_duplicates(['column1'])
+    # take_last will return the last observed value combination and default keeps the first
+    data.drop_duplicates(['column1','column2'], take_last=True)
