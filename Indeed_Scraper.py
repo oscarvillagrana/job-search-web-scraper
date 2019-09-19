@@ -1,9 +1,14 @@
-2#!/usr/bin/python
+#!/usr/bin/python
 
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import requests
+
+
+#-------------------------------------------------
+# Making the Soup
+#-------------------------------------------------
 
 
 # ask the user to enter a local html filename
@@ -19,7 +24,16 @@ def get_input_soup():
     except FileNotFoundError:
         print("Site Not Found. Exiting!")
 
-page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
+def format_page():
+    sub0 = input("Enter first Job Search keyword: ")
+    sub1 = input("Enter second Job Search keyword: ")
+    page = "https://www.indeed.com/jobs?as_and={0}+{1}&as_phr=&as_any=&as_not=&as_ttl=&as_cmp=&jt=all&st=&as_src=&salary=&radius=0&l=San+Francisco&fromage=any&limit=50&sort=&psf=advsrch"
+    a = page.format(sub0, sub1)
+    return a     
+
+# page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
+
+page = format_page()
 headers = {'User-Agent':'Mozilla/5.0'}
 
 def get_soup():
@@ -28,6 +42,12 @@ def get_soup():
     return BeautifulSoup(pageTree.content, 'html.parser')
 
 pageSoup = get_soup()
+
+
+#----------------------------------------------------
+# Getters
+#----------------------------------------------------
+
 
 # Prints company and job information
 def print_company_and_jobs():
