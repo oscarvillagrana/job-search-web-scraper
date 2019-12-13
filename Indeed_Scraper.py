@@ -25,15 +25,16 @@ def get_input_soup():
         print("Site Not Found. Exiting!")
 
 def format_page():
+    print("First we will format the job search with rearch keywords")
     sub0 = input("Enter first Job Search keyword: ")
     sub1 = input("Enter second Job Search keyword: ")
     page = "https://www.indeed.com/jobs?as_and={0}+{1}&as_phr=&as_any=&as_not=&as_ttl=&as_cmp=&jt=all&st=&as_src=&salary=&radius=0&l=San+Francisco&fromage=any&limit=50&sort=&psf=advsrch"
     a = page.format(sub0, sub1)
     return a     
 
-# page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
+page = "https://www.indeed.com/q-software-developer-l-San-Francisco-jobs.html"
 
-page = format_page()
+# page = format_page()
 headers = {'User-Agent':'Mozilla/5.0'}
 
 def get_soup():
@@ -43,11 +44,25 @@ def get_soup():
 
 pageSoup = get_soup()
 
+# print(pageSoup)
 
 #----------------------------------------------------
 # Getters
 #----------------------------------------------------
 
+def print_company_names():
+    companyName = pageSoup.find_all('span', class_='company')
+    for span in companyName:
+        print(span.text)
+
+# print_company_names()
+
+def print_job_titles():
+    jobTitle = pageSoup.find_all('div', class_='title')
+    for span in jobTitle:
+        print(span.text)
+
+# print_job_titles()
 
 # Prints company and job information
 def print_company_and_jobs():
@@ -57,15 +72,7 @@ def print_company_and_jobs():
         for x in companyName:
             print(x.text,span.text)
 
-def print_company_names():
-    companyName = pageSoup.find_all('span', class_='company')
-    for span in companyName:
-        print(span.text)
-
-def print_job_titles():
-    jobTitle = pageSoup.find_all('div', class_='title')
-    for span in jobTitle:
-        print(span.text)
+# print_company_and_jobs()
 
 
 # Makes a list with company and job information
@@ -78,6 +85,8 @@ def get_company_and_jobs():
             comps_and_jobs.append(str(x.text))
             comps_and_jobs.append(str(span.text))
     return comps_and_jobs
+
+# get_company_and_jobs()
 
 def get_company_names():
     comp_names = []
