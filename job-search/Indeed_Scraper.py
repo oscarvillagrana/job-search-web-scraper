@@ -201,3 +201,9 @@ def remove_duplicates():
     data.drop_duplicates(['column1'])
     # take_last will return the last observed value combination and default keeps the first
     data.drop_duplicates(['column1','column2'], take_last=True)
+
+
+# print_company_names()
+# print_job_titles()
+# print_company_and_jobs()
+# get_company_and_jobs()
